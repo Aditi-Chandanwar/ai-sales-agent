@@ -27,7 +27,6 @@ Outreach Agent
 ↓
 Email Status Tracking
 
-
 User Input
 
 The user provides:
@@ -45,18 +44,15 @@ Industry: Automotive
 Target Type: End Users Only
 Product Category: Industrial Sensors
 Lead Count: 10
-
 AI Agent Summary
 Agent	Responsibility	Input	Output
-Lead Discovery Agent	Finds companies matching the target region and industry	Region, Industry, Product Category	List of potential companies
+Lead Discovery Agent	Finds companies matching the target region and industry	LeadDiscoveryRequest	List of potential Lead objects
 Lead Qualification Agent	Checks whether the company is an end user	Company details, website content	Qualified / Rejected status with reason
 Contact Extraction Agent	Extracts publicly available contact information	Company website	Email, phone, contact page, contact person if available
 Lead Scoring Agent	Scores lead quality and relevance	Qualified lead data	Lead score and scoring reason
 Outreach Agent	Sends the first general introduction email	Qualified lead + email template	Email sent status
 Response Analysis Agent	Future: analyzes customer replies	Customer email reply	Requirement summary
 Product Recommendation Agent	Future: recommends relevant sensors	Customer requirements + catalogue data	Suggested products and draft response
-
-
 System Workflow Diagram
                        AI Sales Agent
 
@@ -95,45 +91,112 @@ System Workflow Diagram
               │
               ▼
        Email Status Tracking
+Current Sprint Detail: Sprint 1 - Lead Discovery
 
+Sprint 1 focuses only on discovering potential companies and saving them in a structured format.
 
+LeadDiscoveryRequest
+        ↓
+Query Builder
+        ↓
+Tavily Search Provider
+        ↓
+Search Results
+        ↓
+Result Processing
+        ↓
+Domain-Based Deduplication
+        ↓
+Lead Objects
+        ↓
+CSV Export
+Current Data Models
+LeadDiscoveryRequest
+
+Represents the user's search request.
+
+Fields:
+
+region
+industry
+lead_count
+product_category
+target_type
+
+Example:
+
+region = Germany
+industry = Automotive
+lead_count = 10
+product_category = Industrial Sensors
+target_type = End Users Only
+Lead
+
+Represents one discovered lead.
+
+Fields:
+
+company_name
+website
+country
+source_url
+search_query
+notes
 Agent Details
-
 1. Lead Discovery Agent
-
-Purpose:
+Purpose
 
 Find companies that match the selected region, industry, and product category.
 
-Inputs:
+Current Implementation
 
+The Lead Discovery Agent currently uses:
+
+LeadDiscoveryRequest dataclass for input
+Lead dataclass for output
+Tavily Search API as the search provider
+Query generation biased toward end users
+Domain-based deduplication
+CSV export
+Inputs
 Region / Country
 Industry
 Product Category
+Target Type
 Lead Count
 
 Example input:
 
 Find 10 automotive end-user companies in Germany that may use industrial sensors.
+Search Query Strategy
 
-Possible data sources:
+The agent creates search queries such as:
 
+automotive assembly plants Germany
+automotive manufacturing plants Germany
+automotive production facilities Germany
+automotive component manufacturers Germany
+industrial automation users automotive Germany
+factories using industrial sensors automotive Germany
+
+These queries are designed to find end users rather than distributors or traders.
+
+Possible Data Sources
+Tavily Search API
 Search engines
 Business directories
 Industry associations
 Company websites
 Public company listings
-
-Output:
-
+Output
 Company Name
 Website
 Country
 Source URL
-
+Search Query
+Notes
 2. Lead Qualification Agent
-
-Purpose:
+Purpose
 
 Decide whether a discovered company is a valid end-user lead.
 
@@ -162,10 +225,8 @@ Confidence Score
 Example:
 
 Qualified because the company manufactures automotive parts and likely uses automation sensors in production lines.
-
 3. Contact Extraction Agent
-
-Purpose:
+Purpose
 
 Visit the company website and extract publicly available contact information.
 
@@ -183,10 +244,8 @@ Use only publicly available information.
 Do not guess private email addresses.
 Prefer official company contact emails.
 Store the source URL for traceability.
-
 4. Lead Scoring Agent
-
-Purpose:
+Purpose
 
 Rank leads based on relevance and outreach quality.
 
@@ -208,10 +267,8 @@ Example scoring:
 
 Score: 85/100
 Reason: Automotive manufacturer, official website found, public email available, high relevance to industrial automation sensors.
-
 5. Outreach Agent
-
-Purpose:
+Purpose
 
 Send the first introduction email to qualified leads.
 
@@ -313,6 +370,15 @@ Extract publicly available contact information
 Avoid distributors and suppliers
 Send the first outreach email
 Track email status in a structured format
+Current Progress
+ Sprint 1 - Lead Discovery Agent
+ Sprint 2 - Contact Page Discovery
+ Sprint 3 - Email Extraction
+ Sprint 4 - Lead Qualification
+ Sprint 5 - Lead Scoring
+ Sprint 6 - First Email Outreach
+ Sprint 7 - Reply Analysis
+ Sprint 8 - Product Recommendation
 Future Architecture
 
 Future versions may include:
@@ -325,5 +391,4 @@ Human approval dashboard
 CRM integration
 Follow-up scheduler
 Sales analytics dashboard
-
 ```
