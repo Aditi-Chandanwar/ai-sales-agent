@@ -109,3 +109,21 @@ This improves accuracy, keeps recommendations aligned with company products, and
 ---
 
 This document will continue to evolve throughout the project.
+
+## Decision: Hybrid Qualification
+
+We will keep rule-based qualification as the first layer because it is fast, explainable, and free.
+
+LLM-based qualification will be used later only for Review leads where rules are uncertain.
+
+This avoids unnecessary API cost and makes the system easier to debug.
+
+## Decision: Draft First, Send Later
+
+The system will not send emails automatically in Sprint 4.
+
+Sprint 4 will only generate email drafts.
+
+Every draft will have approval_status = Pending Review.
+
+This keeps humans in control and prevents accidental outreach.
