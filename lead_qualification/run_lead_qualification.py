@@ -60,40 +60,57 @@ def read_leads(input_path: str) -> list:
 
 
 def _sample_leads() -> list:
-    """A tiny built-in sample, just enough to demo Qualified/Review/Rejected."""
+    """
+    A tiny built-in sample demonstrating the quality gate:
+        - Wikipedia page       -> hard-rejected (blocked domain)
+        - YouTube video        -> hard-rejected (blocked domain)
+        - PDF industry report  -> hard-rejected (.pdf source_url)
+        - Mercedes-Benz plant  -> passes the gate, scores normally
+    """
     return [
         {
-            "company_name": "Bosch Automotive Assembly Plant",
-            "website": "https://bosch-automotive-plant.example.com",
+            "company_name": "Automotive industry - Wikipedia",
+            "website": "https://en.wikipedia.org/wiki/Automotive_industry",
             "country": "Germany",
-            "source_url": "https://bosch-automotive-plant.example.com/about",
+            "source_url": "https://en.wikipedia.org/wiki/Automotive_industry",
+            "search_query": "automotive manufacturing plants Germany",
+            "notes": "Automotive manufacturing, OEM, production plants overview article",
+            "contact_pages": "",
+            "emails": "",
+            "phones": "",
+        },
+        {
+            "company_name": "Inside a Modern Automotive Assembly Plant (Video)",
+            "website": "https://www.youtube.com/watch?v=abc123",
+            "country": "Germany",
+            "source_url": "https://www.youtube.com/watch?v=abc123",
             "search_query": "automotive assembly plants Germany",
-            "notes": "Bosch automotive assembly plant, manufacturing production facility",
-            "contact_pages": "https://bosch-automotive-plant.example.com/contact",
-            "emails": "info@bosch-automotive-plant.example.com",
-            "phones": "+49 711 123 4567",
-        },
-        {
-            "company_name": "AutoParts Distributor GmbH",
-            "website": "https://autoparts-distributor.example.com",
-            "country": "Germany",
-            "source_url": "https://autoparts-distributor.example.com",
-            "search_query": "automotive component manufacturers Germany",
-            "notes": "Leading distributor and reseller of automotive parts, online store",
+            "notes": "Video tour of an automotive OEM production and assembly plant",
             "contact_pages": "",
             "emails": "",
             "phones": "",
         },
         {
-            "company_name": "Generic Job Board Listing",
-            "website": "https://jobs.example.com/company/xyz",
+            "company_name": "Global Automotive OEM Industry Report 2026",
+            "website": "https://example-research.com/reports/automotive-oem-2026.pdf",
             "country": "Germany",
-            "source_url": "https://jobs.example.com/company/xyz",
-            "search_query": "automotive manufacturers Germany",
-            "notes": "Job board listing page, not a real company website",
+            "source_url": "https://example-research.com/reports/automotive-oem-2026.pdf",
+            "search_query": "automotive OEM manufacturing plants Germany",
+            "notes": "Industry report covering automotive manufacturing and production trends",
             "contact_pages": "",
             "emails": "",
             "phones": "",
+        },
+        {
+            "company_name": "Mercedes-Benz Group AG",
+            "website": "https://www.mercedes-benz.com",
+            "country": "Germany",
+            "source_url": "https://www.mercedes-benz.com/en/company/plants/",
+            "search_query": "automotive assembly plants Germany",
+            "notes": "Mercedes-Benz automotive manufacturing and vehicle assembly production plant",
+            "contact_pages": "https://www.mercedes-benz.com/en/company/contact/",
+            "emails": "media@mercedes-benz.com",
+            "phones": "+49 711 17 0",
         },
     ]
 
